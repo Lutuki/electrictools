@@ -235,8 +235,6 @@ function nextSection() {
       datosInstalacion.longitud = document.getElementById("longitud").value;
     }
     if (currentSection === 2) {
-      datosInstalacion.inclinacion = document.getElementById("inclinacion").value;
-      datosInstalacion.azimuth = document.getElementById("azimuth").value;
       datosInstalacion.diasAutonomia = document.getElementById("diasAutonomia").value;
       datosInstalacion.tensionSistema = document.getElementById("tensionSistema").value;
       datosInstalacion.tensionPanel = document.getElementById("tensionPanel").value;
@@ -373,8 +371,8 @@ function mostrarReporte() {
     <p><strong>Irradiación Media Mensual:</strong> ${datosInstalacion.irradiacion || "N/D"} kWh/m²/día</p>
     <p><strong>Detalles del Sistema:</strong></p>
     <ul>
-      <li>Inclinación: ${datosInstalacion.inclinacion || "N/D"}°</li>
-      <li>Azimuth: ${datosInstalacion.azimuth || "N/D"}°</li>
+      <li>Inclinación: 30°</li>
+      <li>Azimuth: 180°</li>
       <li>Número de días de autonomía: ${datosInstalacion.diasAutonomia || "N/D"}</li>
       <li>Tensión del sistema: ${datosInstalacion.tensionSistema || "N/D"} V</li>
       <li>Tensión del panel: ${datosInstalacion.tensionPanel || "N/D"} V</li>
@@ -515,8 +513,8 @@ function generarFichaTecnica() {
 
   addDataSection('Detalles del Sistema', {
       'Irradiación Media Mensual': `${datosInstalacion.irradiacion || "N/D"} kWh/m²/día`,
-      'Inclinación': `${datosInstalacion.inclinacion || "N/D"}°`,
-      'Azimuth': `${datosInstalacion.azimuth || "N/D"}°`,
+      'Inclinación': `30°`,
+      'Azimuth': `180°`,
       'Número de días de autonomía': `${datosInstalacion.diasAutonomia || "N/D"}`,
       'Tensión del sistema': `${datosInstalacion.tensionSistema || "N/D"} V`,
       'Tensión del panel': `${datosInstalacion.tensionPanel || "N/D"} V`,
