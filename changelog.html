@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Tools - Cambios</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ugf1blyfv1/ugf1blyfv1/refs/heads/main/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="main_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  <!-- Assuming Font Awesome is included -->
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif; /* Or your preferred font */
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        overflow: auto;
+    }
+
+        .changelog-container {
+            padding: 20px;
+            margin-top: 70px; /* Space for the top bar */
+            overflow-y: hidden; /* Allow scrolling in the container if content overflows */
+            max-height: calc(100vh - 70px - 60px); /* 70px for top bar, 60px for footer */
+        }
+
+        .release-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .release-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+
+        .changelog-entry {
+            display: flex;
+            align-items: center; /* Vertically align icon and text */
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 10px; /* Rounded corners for entries */
+            transition: background-color 0.3s ease; /* Smooth hover transition */
+
+        }
+        .changelog-entry:hover {
+          background-color: #eee; /* Example hover color */
+        }
+
+
+        .changelog-entry i {
+            margin-right: 10px;  /* Space between icon and text */
+            font-size: 1.2em;   /* Slightly larger icon */
+        }
+
+        .changelog-entry.new i { color: green; }  /* Style "New" icon */
+        .changelog-entry.fix i { color: blue; }   /* Style "Fix" icon */
+        .changelog-entry.removed i { color: red; } /* Style "Removed" icon */
+        footer.fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 12px;
+            color: #7e7e7e;
+            z-index: 1000;
+        }
+        .changelog-title { /* Styles for the main Changelog title */
+            text-align: center;
+            font-size: 40px; /* Adjust size as needed */
+            font-weight: bold;
+            margin-bottom: -20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="changelog-container">
+
+    <header class="top-bar">
+        <div class="left"><a href="settings.html"><i class="fas fa-arrow-left"></i> Volver</a></div>
+        <div class="center"><span id="clickableTitle">Electric Tools</span></div>
+        <div class="right"><span class="username"></span></div>
+    </header>
+
+
+    <h1 class="changelog-title">Changelog</h1>  </div> <div class="changelog-container">
+
+        <div class="release-box">
+            <div class="release-title">BETA v1.0.1 - 22/02/2025</div>
+
+            <div class="changelog-entry new">
+                <i class="fas fa-plus-circle"></i> <span>Se añadió Simulador Circuito de electrónica.</span>
+            </div> 
+            <div class="changelog-entry new">
+                <i class="fas fa-plus-circle"></i> <span>Se añadidó el sistema de Cambios.</span>
+            </div>
+            <div class="changelog-entry new">
+                <i class="fas fa-plus-circle"></i> <span>Se añadió un nuevo apartado Electrónica.</span>
+            </div>
+            <div class="changelog-entry new">
+                <i class="fas fa-plus-circle"></i> <span>Se añadió el sistema de Ajustes.</span>
+            </div>
+            <div class="changelog-entry removed">
+                <i class="fas fa-minus-circle"></i> <span>Se eliminó los 3s de mensaje de bienvenida.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se arreglarón errores de calculo en sistema autonomo fotovoltaica.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se arreglarón errores visuales.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se arreglaró la duración de bienvenida a 1,5s.</span>
+            </div>
+        </div>
+        <div class="release-box">
+            <div class="release-title">RELEASE v1.0.0 - 08/02/2025</div>
+
+            <div class="changelog-entry new">
+                <i class="fas fa-plus-circle"></i> <span>Publicación pagina web.</span>
+            </div> 
+            <div class="changelog-entry new">
+                <i class="fas fa-plus-circle"></i> <span>Se añadió fotovoltaica.</span>
+            </div> 
+            <div class="changelog-entry new">
+                <i class="fas fa-plus-circle"></i> <span>Se añadió Sistema Autónomo de fotovoltaica.</span>
+            </div> 
+        </div>
+    </div>
+
+    <footer class="fixed-footer">
+        Desarrollado por Miquel Suriñach Mondelo
+    </footer>
+
+
+    <script>
+      // Your JavaScript code
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedUsername = localStorage.getItem('username');
+            const usernameDisplay = document.querySelector('.username');
+            const clickableTitle = document.getElementById('clickableTitle');
+
+            if (savedUsername) {
+                usernameDisplay.textContent = "¡Hola, " + savedUsername + "!";
+            }
+
+            clickableTitle.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+/* Estilos generales */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  padding: 20px;
+  margin: 0;
+  margin-bottom: 60px;
+  transition: filter 0.3s ease;
+  color: #333;
+}
+
+/* Estilos para la barra superior */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #007BFF;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 15px 20px; /* Increased padding for better spacing */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+#clickableTitle {
+  overflow: visible; /* Allow full title to be visible */
+  white-space: nowrap; 
+  max-width: 300px; /* Set a fixed width to prevent shifting */
+  text-align: center; /* Center the title */
+}
+
+.top-bar .center {
+  margin: auto;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: right;
+  min-width: 250px; /* Or adjust as needed */
+  display: flex; /* Change to flex for proper alignment */
+  align-items: center; /* Center the span vertically within .center */
+}
+
+.top-bar .right {
+  display: flex;
+  gap: 10px; /* Espacio entre las banderas */
+  align-items: center; /* Alinea verticalmente las banderas */
+  max-width: 150px; /* Set a fixed width to prevent shifting */
+}
+
+.top-bar .username {  /* New class for the username */
+  max-width: 150px; /* Adjust as needed */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+  white-space: nowrap;    /* Prevent text from wrapping */
+}
+
+/* Estilos para el contenido principal */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: row; /* Alineación en fila */
+  justify-content: flex-start; /* Alineación al inicio */
+  align-items: flex-start; /* Alineación al inicio */
+  padding: 20px;
+  margin-top: 60px;
+  min-height: calc(100vh - 110px);
+}
+
+.clickable-box {  /* General styles for ALL clickable boxes */
+  border: 2px solid #007BFF;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  color: #007BFF;
+  cursor: pointer;
+  margin-right: 15px;
+  transition: background 0.3s, color 0.3s, transform 0.2s ease-in-out;
+  width: 150px; 
+  height: 150px; 
+  margin-top: -10px; /* Add margin between boxes if needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.clickable-box:hover {
+  transform: scale(1.05); /* Slight scale up on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+}
+
+.box-icon {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el pie de página */
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 12px;
+  color: #7e7e7e;
+  z-index: 1000;
+}
+
+/* Ajustes para la página principal */
+body.main-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#clickableTitle {
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+#clickableTitle:hover {
+  filter: brightness(0.8);
+}
+.modal-backdrop {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 10; /* Ensure it's above other content */
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for centering */
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 11; /* Above the backdrop */
+}
+
+.modal-content {
+  text-align: center; /* Centers the content within the modal */
+}
+
+.modal-content h2 {
+  margin-bottom: 20px; /* Adjusted spacing below title */
+  color: #333;  /* Darker title color */
+  font-weight: 600; /* Slightly bolder title */
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="password"] {
+  width: 100%;
+  padding: 14px; /* Increased padding for inputs */
+  margin-bottom: 20px; /* More spacing between inputs */
+  border: 1px solid #ddd; /* Lighter border */
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease; /* Smooth transition for focus */
+}
+
+.modal-content h2 {
+  margin-bottom: 30px; /* More spacing below title */
+  color: #333;  /* Darker title color */
+  font-weight: 600; /* Slightly bolder title */
+}
+
+.modal-content label {
+  display: block;  /* Makes labels stack neatly */
+  margin-bottom: -12px; /* More space between label and input */
+  text-align: left;
+  font-weight: 500; /* Slightly bolder labels */
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="password"] {
+  width: 100%;
+  padding: 12px; /* Increased padding */
+  margin-bottom: 20px; /* More spacing between inputs */
+  border: 1px solid #ddd; /* Lighter border */
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease; /* Smooth transition for focus */
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="password"]:focus {
+  border-color: #007bff; /* Highlight border on focus (adjust color as needed) */
+  outline: none;  /* Removes default focus outline */
+}
+
+.modal-content button {
+  background-color: #007bff;
+  color: white;
+  padding: 14px 25px; /* Slightly larger button */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  font-weight: 500; /* Slightly bolder button text */
+}
+
+button {
+  display: inline-block; /* Or block if you want it full width */
+}
+
+.modal-content button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  display: none;
+  font-size: 14px; /* Slightly smaller error message */
+}
+
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+  .top-bar .username {
+    max-width: 100px; /* Reduce max-width on smaller screens */
+  }
+
+  .top-bar .right {
+    gap: 5px;       /* Reduce the gap on smaller screens */
+  }
+}
+
+/* Media query for medium screens (e.g., tablets) - Optional */
+@media (min-width: 769px) and (max-width: 1024px) { /* Adjust breakpoints as needed */
+    .clickable-box {
+        width: 45%; /* Or adjust as needed */
+    }
+  .modal-content {
+    width: 60%; /* Or adjust as needed */
+  }
+}
+
+/* WELOCOME STYLES */
+/* WELOCOME STYLES */
+/* WELOCOME STYLES */
+
+#loginModal .modal-content {
+  text-align: center;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+#loginModal input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 80%; /* Adjust width as needed */
+  box-sizing: border-box; /* Ensures padding is included in the width */
+}
+
+#loginModal button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Green */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+#loginModal button:hover {
+  background-color: #0056b3; /* Darker green on hover */
+}
+
+.top-bar .left a { /* Style the back button link */
+  color: white;
+  text-decoration: none;
+  display: inline-flex; /* Use inline-flex for better alignment */
+  align-items: center;
+  padding: 8px 12px;  /* Add padding around the button */
+  border-radius: 5px; /* Optional: round the corners */
+  transition: background-color 0.3s ease; /* For hover effect */
+}
+
+.top-bar .left a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Subtle hover effect */
+}
+
+.top-bar .left i { /* Style for FontAwesome back arrow icon */
+  margin-right: 5px; 
+}
+
+.top-bar .center {  /* Ensure title stays centered */
+  flex: 0 0 auto;    /* Prevents shrinking or growing */
+  text-align: center;  /* Center the text within .center */
+  width: auto;    /* Allow natural width */
+  margin: 0 auto;  /* Center horizontally */
+}
+
+.top-bar .center span#clickableTitle {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.welcome-screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 12; /* Above all other elements */
+  animation: fadeInUp 0.5s ease-in-out forwards; /* forwards keeps the final state */
+}
+
+.welcome-message {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+0% { opacity: 1; }
+100% { opacity: 0; }
+}
+
+.container {
+  display: flex;
+  flex-direction: column
+}
+
+#welcomeMessage {
+  grid-row: 1; /* Place in the first row */
+  margin-bottom: 20px;
+}
+
+.top-bar .username {
+  /* ... other username styles ... */
+  cursor: pointer; /* Make it clickable */
+}
+
+.top-bar .username:hover {  /* Hover effect */
+  text-decoration: underline;
+}
