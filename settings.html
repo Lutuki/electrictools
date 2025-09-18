@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Tools - Ajustes</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ugf1blyfv1/ugf1blyfv1/refs/heads/main/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="main_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f0f0;
+            overflow: hidden; /* Hide scrollbars */
+        }
+
+        .container {
+            padding: 20px;
+            margin-top: 70px; /* Space for top bar */
+            overflow: hidden; /* Hide scrollbars */
+            max-height: calc(100vh - 70px); /* Adjust as needed */
+        }
+
+        h1, h2, p {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+
+        .container h1, 
+        .container h2, 
+        .container p, 
+        .container button,
+        .container pre {  /* Add pre for license text */
+            text-align: left; /* Align text to the left */
+            margin-left: 20px; /* Consistent left margin (optional) */
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px; /* More rounded corners */
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Add transform transition */
+            margin-left: 20px;
+            margin-bottom: 10px;
+            display: inline-block; /* Change to inline-block */
+            width: fit-content; /* Make button width fit the content */
+        }
+
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.01); /* Scale up slightly on hover */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            justify-content: center; /* Horizontally center content */
+            align-items: center;     /* Vertically center content */
+            padding: 0;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px; /* Adjust as needed */
+            width: 90%; /* Make the modal responsive */
+            position: relative; /* Allows absolute positioning of the close button */
+            padding: 20px;
+
+        }
+        /* Style preformatted text */
+        pre {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow: auto;
+            margin-left: 20px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            color: #888;
+            cursor: pointer;
+            background-color: #fff; /* White background for the close button */
+            border-radius: 50%; /* Make it a circle */
+            width: 35px; /* Adjust size */
+            height: 35px; /* Adjust size */
+            display: flex;   /* Use flexbox for centering */
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Add a subtle shadow */
+            transition: background-color 0.2s ease, transform 0.2s ease; /* Smooth transitions */
+        }
+
+        .close:hover {
+            background-color: #f0f0f0; /* Light gray on hover */
+            transform: scale(1.1);   /* Slightly larger on hover */
+            color: #666;  /* Slightly darker X color on hover */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="top-bar">
+        <div class="left"><a href="index.html"><i class="fas fa-arrow-left"></i> Volver</a></div>
+        <div class="center"><span id="clickableTitle">Electric Tools</span></div>
+        <div class="right"><span id="usernameDisplay"></span></div>
+    </header>
+
+    <h1>Ajustes</h1>
+
+    <h2>Cuenta</h2>
+    <p>Tu nombre actual: <span id="displayName"></span></p>
+    <button onclick="logout()">Cerrar Sesión</button>
+
+    <h2>Acerca de</h2>
+    <button id="btnAbout">Sobre la página web</button>
+
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+            <h2>Sobre la página web</h2>
+            <p>Desarrollador: Miquel Suriñach Mondelo</p>
+            <p>Educador: Rossend Ávila Barris</p>
+            <p>Versión de la página: BETA v1.0.1</p>
+        </div>
+    </div>
+
+    <h2>Recursos</h2>
+    <button onclick="window.location.href='changelog.html'">Ver Changelog</button>
+    <button id="btnLicense">Ver Licencia MIT</button>
+
+    <div id="licenseModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('licenseModal')">&times;</span>
+            <h2>Licencia MIT</h2>
+            <pre>
+MIT License
+
+Copyright (c) 2025 Miquel Suriñach Mondelo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+            </pre>
+        </div>
+    </div>
+</div>
+<footer class="fixed-footer">
+    Desarrollado por Miquel Suriñach Mondelo
+</footer>
+
+<script>
+
+    function logout() {
+        localStorage.removeItem('username');
+        window.location.href = 'index.html';
+    }
+
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const displayName = document.getElementById('displayName');
+        const username = localStorage.getItem('username');
+        if (username) {
+            displayName.textContent = username;
+            document.getElementById('usernameDisplay').textContent = "¡Hola, " + username + "!";
+        } else {
+            window.location.href = "index.html"; // or wherever your login page is
+        }
+
+        // ... (rest of your script) ...
+
+        document.getElementById('btnAbout').addEventListener('click', () => openModal('aboutModal'));
+        document.getElementById('btnLicense').addEventListener('click', () => openModal('licenseModal'));
+
+        const clickableTitle = document.getElementById('clickableTitle'); // Ensure this is defined
+        clickableTitle.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+
+    });
+</script>
+</body>
+</html>
+

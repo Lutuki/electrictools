@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Tools - Cambios</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ugf1blyfv1/ugf1blyfv1/refs/heads/main/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="main_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  <!-- Assuming Font Awesome is included -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif; /* Or your preferred font */
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+        min-height: 100vh;
+        overflow: auto;
+        color: #333;
+    }
+
+        .changelog-container {
+            padding: 20px;
+            margin-top: 70px; /* Space for the top bar */
+        }
+
+        .release-box {
+            background: white;
+            border: 2px solid #007BFF;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .release-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.2);
+        }
+
+        .release-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #007BFF;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+
+        .changelog-entry {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            background: rgba(0, 123, 255, 0.05);
+            border-left: 3px solid transparent;
+        }
+        
+        .changelog-entry:hover {
+            background: rgba(0, 123, 255, 0.1);
+            transform: translateX(3px);
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+        }
+
+
+        .changelog-entry i {
+            margin-right: 10px;  /* Space between icon and text */
+            font-size: 1.2em;   /* Slightly larger icon */
+        }
+
+        .changelog-entry.new {
+            border-left-color: #28a745;
+        }
+        .changelog-entry.new i { 
+            color: #28a745;
+        }
+        
+        .changelog-entry.fix {
+            border-left-color: #007BFF;
+        }
+        .changelog-entry.fix i { 
+            color: #007BFF;
+        }
+        
+        .changelog-entry.removed {
+            border-left-color: #dc3545;
+        }
+        .changelog-entry.removed i { 
+            color: #dc3545;
+        }
+        footer.fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 12px;
+            color: #7e7e7e;
+            z-index: 1000;
+        }
+        .changelog-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #007BFF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="changelog-container">
+
+    <header class="top-bar">
+        <div class="left"><a href="settings.html"><i class="fas fa-arrow-left"></i> Volver</a></div>
+        <div class="center"><span id="clickableTitle">Electric Tools</span></div>
+        <div class="right"><span class="username"></span></div>
+    </header>
+
+
+    <h1 class="changelog-title">Changelog</h1>  </div> <div class="changelog-container">
+
+        <div class="release-box">
+            <div class="release-title">BETA v1.0.2 - 17/09/2025</div>
+
+            <div class="changelog-entry new">
+                <i class="fas fa-plus-circle"></i> <span>Se añadió el botón link de ajustes a todas las páginas.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se modificó la estética de la página de changelog.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se quitó el botón de volver de la página de inicio.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se arreglaron errores visuales.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se cambió la tipología de letra de la página a Montserrat.</span>
+            </div>
+        </div>
+
+		<div class="release-box">
+			<div class="release-title">BETA v1.0.1 - 22/02/2025</div>
+
+			<div class="changelog-entry new">
+				<i class="fas fa-plus-circle"></i> <span>Se añadió el simulador de circuitos de electrónica.</span>
+			</div> 
+			<div class="changelog-entry new">
+				<i class="fas fa-plus-circle"></i> <span>Se añadió el sistema de cambios.</span>
+			</div>
+			<div class="changelog-entry new">
+				<i class="fas fa-plus-circle"></i> <span>Se añadió un nuevo apartado de electrónica.</span>
+			</div>
+			<div class="changelog-entry new">
+				<i class="fas fa-plus-circle"></i> <span>Se añadió el sistema de ajustes.</span>
+			</div>
+			<div class="changelog-entry removed">
+				<i class="fas fa-minus-circle"></i> <span>Se eliminaron los 3 segundos del mensaje de bienvenida.</span>
+			</div>
+			<div class="changelog-entry fix">
+				<i class="fas fa-wrench"></i> <span>Se arreglaron errores de cálculo en el sistema autónomo fotovoltaico.</span>
+			</div>
+			<div class="changelog-entry fix">
+				<i class="fas fa-wrench"></i> <span>Se arreglaron errores visuales.</span>
+			</div>
+			<div class="changelog-entry fix">
+				<i class="fas fa-wrench"></i> <span>Se corrigió la duración del mensaje de bienvenida a 1,5 segundos.</span>
+			</div>
+		</div>
+		<div class="release-box">
+			<div class="release-title">RELEASE v1.0.0 - 08/02/2025</div>
+
+			<div class="changelog-entry new">
+				<i class="fas fa-plus-circle"></i> <span>Publicación de la página web.</span>
+			</div> 
+			<div class="changelog-entry new">
+				<i class="fas fa-plus-circle"></i> <span>Se añadió la sección de fotovoltaica.</span>
+			</div> 
+			<div class="changelog-entry new">
+				<i class="fas fa-plus-circle"></i> <span>Se añadió el sistema autónomo de fotovoltaica.</span>
+			</div> 
+		</div>
+
+    </div>
+
+    <footer class="fixed-footer">
+        Desarrollado por Miquel Suriñach Mondelo
+    </footer>
+
+
+    <script>
+      // Your JavaScript code
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedUsername = localStorage.getItem('username');
+            const usernameDisplay = document.querySelector('.username');
+            const clickableTitle = document.getElementById('clickableTitle');
+
+            if (savedUsername) {
+                usernameDisplay.textContent = "¡Hola, " + savedUsername + "!";
+            }
+
+            clickableTitle.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        });
+
+    </script>
+</body>
+</html>

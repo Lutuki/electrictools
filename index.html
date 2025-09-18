@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Electric Tools</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/ugf1blyfv1/ugf1blyfv1/refs/heads/main/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="main_styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="main-page">
+
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Introduce tu nombre</h2>
+            <input type="text" id="username" placeholder="Ej. Juan Pérez"><br><br>
+            <button onclick="saveUsername()">Acceder</button>
+        </div>
+    </div>
+
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="welcome-message">
+            <h2 id="welcomeTitle"></h2>
+            <p>Desarrollado por Miquel Suriñach Mondelo</p>
+        </div>
+    </div>
+
+    <header class="top-bar">
+        <div class="left"></div>
+        <div class="center"><span id="clickableTitle">Electric Tools</span></div>
+        <div class="right"><span class="username"></span></div>
+    </header>
+
+    <main class="content">
+        <h2 id="appsTitle"></h2>
+        <div class="clickable-box" onclick="location.href='fotovoltaica.html'">
+            <i class="fas fa-solar-panel box-icon"></i>
+            Fotovoltaica
+        </div>
+        <div class="clickable-box" onclick="location.href='electronica.html'">
+            <i class="fas fa-microchip box-icon"></i>
+            Electrónica
+        </div>
+    </main>
+
+    <footer class="fixed-footer">
+        Desarrollado por Miquel Suriñach Mondelo
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // All code that interacts with the DOM goes INSIDE this listener
+        
+            const savedUsername = localStorage.getItem('username');
+        
+            const usernameInput = document.getElementById('username'); // Select only once
+            const loginModal = document.getElementById('loginModal'); // Select only once
+            const modalBackdrop = document.getElementById('modalBackdrop'); // Select only once
+            const welcomeScreen = document.getElementById('welcomeScreen'); // Select only once
+            const welcomeTitle = document.getElementById('welcomeTitle'); // Select only once
+            const usernameDisplay = document.querySelector('.username'); // Select only once
+            const clickableTitle = document.getElementById('clickableTitle'); // Select only once
+        
+        
+            function showLoginModal() {
+                modalBackdrop.style.display = "block";
+                loginModal.style.display = "block";
+            }
+        
+            function showWelcomeMessage(username) {
+                welcomeTitle.textContent = "¡Hola " + username + ", bienvenido!";
+                usernameDisplay.textContent = "¡Hola, " + username + "!";
+                welcomeScreen.style.display = 'flex';
+
+                // Add fade-out after a delay
+                setTimeout(() => {
+                    welcomeScreen.style.animation = 'fadeOut 0.5s ease-in-out forwards';
+                    setTimeout(() => {  // Delay to hide after animation
+                        welcomeScreen.style.display = 'none';
+                        welcomeScreen.style.animation = ''; // Reset animation for next time
+                    }, 500); // 500ms (match animation duration)
+                }, 2000);
+            }
+        
+            function saveUsername() {
+                const username = usernameInput.value.trim();
+                if (username) {
+                    localStorage.setItem('username', username);
+                    loginModal.style.display = "none";
+                    modalBackdrop.style.display = "none";
+                    showWelcomeMessage(username);
+                } else {
+                    alert("Por favor, introduce tu nombre.")
+                }
+            }
+   
+            if (savedUsername) {
+                showWelcomeMessage(savedUsername);
+            } else {
+                showLoginModal();
+            }
+        
+            // Add event listeners INSIDE DOMContentLoaded
+            document.querySelector('#loginModal button').addEventListener('click', saveUsername); // Correct the selector
+        
+            clickableTitle.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        
+            usernameDisplay.addEventListener('click', function() {
+                window.location.href = 'settings.html'; // Open settings.html
+            });
+        });
+    </script>        
+</body>
+</html>
