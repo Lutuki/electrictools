@@ -7,48 +7,64 @@
     <link rel="icon" href="https://raw.githubusercontent.com/ugf1blyfv1/ugf1blyfv1/refs/heads/main/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="main_styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  <!-- Assuming Font Awesome is included -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
       body {
         font-family: 'Montserrat', sans-serif; /* Or your preferred font */
         margin: 0;
         padding: 0;
-        background-color: #f0f0f0;
+        background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+        min-height: 100vh;
         overflow: auto;
+        color: #333;
     }
 
         .changelog-container {
             padding: 20px;
             margin-top: 70px; /* Space for the top bar */
-            overflow-y: hidden; /* Allow scrolling in the container if content overflows */
-            max-height: calc(100vh - 70px - 60px); /* 70px for top bar, 60px for footer */
         }
 
         .release-box {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            background: white;
+            border: 2px solid #007BFF;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .release-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.2);
         }
 
         .release-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #007BFF;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 8px;
+            display: inline-block;
         }
 
 
         .changelog-entry {
             display: flex;
-            align-items: center; /* Vertically align icon and text */
+            align-items: center;
             margin-bottom: 10px;
-            padding: 10px 15px;
-            border-radius: 10px; /* Rounded corners for entries */
-            transition: background-color 0.3s ease; /* Smooth hover transition */
-
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            background: rgba(0, 123, 255, 0.05);
+            border-left: 3px solid transparent;
         }
+        
         .changelog-entry:hover {
-          background-color: #eee; /* Example hover color */
+            background: rgba(0, 123, 255, 0.1);
+            transform: translateX(3px);
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
         }
 
 
@@ -57,9 +73,26 @@
             font-size: 1.2em;   /* Slightly larger icon */
         }
 
-        .changelog-entry.new i { color: green; }  /* Style "New" icon */
-        .changelog-entry.fix i { color: blue; }   /* Style "Fix" icon */
-        .changelog-entry.removed i { color: red; } /* Style "Removed" icon */
+        .changelog-entry.new {
+            border-left-color: #28a745;
+        }
+        .changelog-entry.new i { 
+            color: #28a745;
+        }
+        
+        .changelog-entry.fix {
+            border-left-color: #007BFF;
+        }
+        .changelog-entry.fix i { 
+            color: #007BFF;
+        }
+        
+        .changelog-entry.removed {
+            border-left-color: #dc3545;
+        }
+        .changelog-entry.removed i { 
+            color: #dc3545;
+        }
         footer.fixed-footer {
             position: fixed;
             bottom: 0;
@@ -71,11 +104,13 @@
             color: #7e7e7e;
             z-index: 1000;
         }
-        .changelog-title { /* Styles for the main Changelog title */
+        .changelog-title {
             text-align: center;
-            font-size: 40px; /* Adjust size as needed */
-            font-weight: bold;
-            margin-bottom: -20px;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #007BFF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -92,6 +127,23 @@
 
 
     <h1 class="changelog-title">Changelog</h1>  </div> <div class="changelog-container">
+
+        <div class="release-box">
+            <div class="release-title">BETA v1.0.2 - 17/09/2025</div>
+
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se modificó la estetica de la página de changelog.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se quito el boton de volver de la pagina de inicio.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se arreglarón errores visuales.</span>
+            </div>
+            <div class="changelog-entry fix">
+                <i class="fas fa-wrench"></i> <span>Se cambió la tipologia de letra de la pagina a Montserrat.</span>
+            </div>
+        </div>
 
         <div class="release-box">
             <div class="release-title">BETA v1.0.1 - 22/02/2025</div>
