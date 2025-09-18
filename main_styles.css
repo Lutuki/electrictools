@@ -20,11 +20,12 @@ body {
   top: 0;
   left: 0;
   width: 100%;
+  height: 60px; /* Altura fija para consistencia */
   background: #007BFF;
   color: white;
   display: flex;
   align-items: center;
-  padding: 15px 20px; /* Increased padding for better spacing */
+  padding: 0 20px; /* Padding horizontal solamente */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
@@ -36,21 +37,29 @@ body {
   text-align: center; /* Center the title */
 }
 
+.top-bar .left {
+  flex: 0 0 150px; /* Fixed width for left section */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .top-bar .center {
-  margin: auto;
+  flex: 1; /* Takes remaining space and centers content */
   font-size: 22px;
   font-weight: bold;
-  text-align: right;
-  min-width: 250px; /* Or adjust as needed */
-  display: flex; /* Change to flex for proper alignment */
-  align-items: center; /* Center the span vertically within .center */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .top-bar .right {
+  flex: 0 0 150px; /* Fixed width for right section */
   display: flex;
-  gap: 10px; /* Espacio entre las banderas */
-  align-items: center; /* Alinea verticalmente las banderas */
-  max-width: 150px; /* Set a fixed width to prevent shifting */
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .top-bar .username {  /* New class for the username */
