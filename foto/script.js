@@ -16,7 +16,7 @@ function validateCurrentSection() {
   const currentSection = document.querySelector(".section.active");
   const requiredFields = currentSection.querySelectorAll("input[required], select[required]");
   let allFilled = true;
-  
+
   // Para la sección 1, se requiere además que se ingrese irradiación y que, si se ingresa POTENCIA > 0, HORAS/día sea > 0 (y ≤ 24)
   if (currentSection.id === "section1") {
     const irradiation = document.getElementById("irradiacion").value;
@@ -49,7 +49,7 @@ function validateCurrentSection() {
       }
     });
   }
-  
+
   const btnNext = currentSection.querySelector("button[id^='btnSiguiente'], button[type='submit']");
   if (btnNext) {
     btnNext.disabled = !allFilled;
@@ -60,11 +60,11 @@ document.querySelectorAll(".section").forEach(section => {
   section.addEventListener("input", validateCurrentSection);
 });
 
-document.getElementById("latitud").addEventListener("input", function() {
+document.getElementById("latitud").addEventListener("input", function () {
   validarUbicacion();
   validateCurrentSection();
 });
-document.getElementById("longitud").addEventListener("input", function() {
+document.getElementById("longitud").addEventListener("input", function () {
   validarUbicacion();
   validateCurrentSection();
 });
@@ -76,14 +76,14 @@ function validarUbicacion() {
 }
 
 let map, marker;
-document.getElementById("btnAbrirMapa").addEventListener("click", function() {
+document.getElementById("btnAbrirMapa").addEventListener("click", function () {
   document.getElementById("mapContainer").style.display = "block";
   if (!map) {
     map = L.map("mapContainer").setView([0, 0], 2);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; OpenStreetMap contributors"
     }).addTo(map);
-    map.on("click", function(e) {
+    map.on("click", function (e) {
       let lat = e.latlng.lat.toFixed(6);
       let lon = e.latlng.lng.toFixed(6);
       document.getElementById("latitud").value = lat;
@@ -100,7 +100,7 @@ document.getElementById("btnAbrirMapa").addEventListener("click", function() {
 
 function obtenerUbicacion() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
       let lat = position.coords.latitude.toFixed(6);
       let lon = position.coords.longitude.toFixed(6);
       document.getElementById("latitud").value = lat;
@@ -129,8 +129,8 @@ function calcularIrradiacion() {
   const cargandoMsg = document.getElementById("cargandoMsg");
   btn.disabled = true;
   cargandoMsg.textContent = "Cargando...";
-  
-  let url = `https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=${lon}&latitude=${lat}&start=20240101&end=20241231&format=JSON`;
+
+  let url = `https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=${lon}&latitude=${lat}&start=20250101&end=20251231&format=JSON`;
   fetch(url)
     .then(response => {
       if (!response.ok) {
@@ -296,7 +296,7 @@ function calcularSistema() {
   const E_diaria =
     parseFloat(datosInstalacion.consumoDiario) ||
     (parseFloat(datosInstalacion.totalCargasCC) || 0) +
-      (parseFloat(datosInstalacion.totalCargasCA) || 0) ||
+    (parseFloat(datosInstalacion.totalCargasCA) || 0) ||
     2000; // Wh
 
   // Intensidad en el bus CC del sistema
@@ -323,8 +323,8 @@ function calcularSistema() {
   const capacidadCorregidaBaterias = capacidadNominalNecesaria / DoD; // C5
   const bateriasEnSerie = Math.ceil(V_sistema / V_bateria); // C11
   //correct calculation
-  const bateriasEnParalelo = Math.ceil(capacidadCorregidaBaterias/ (C_bateria*bateriasEnSerie));
-  
+  const bateriasEnParalelo = Math.ceil(capacidadCorregidaBaterias / (C_bateria * bateriasEnSerie));
+
   const totalBaterias = bateriasEnParalelo * bateriasEnSerie;
   const capacidadMinimaPorBateria = C_bateria;
 
@@ -429,7 +429,7 @@ function mostrarReporte() {
     reporteHTML += `<li>Datos de irradiación no disponibles.</li>`;
   }
   reporteHTML += `</ul>`;
-  
+
   document.getElementById("section3").innerHTML = ` 
     <h3>Reporte del Sistema Fotovoltaico</h3>
     <div id="reporte">${reporteHTML}</div>
@@ -440,7 +440,7 @@ function mostrarReporte() {
     <button onclick="generarFichaTecnica()">Generar Ficha Técnica</button> 
   `;
   document.getElementById("section3").classList.add("active");
-  
+
   const ctx = document.getElementById("graficoIrradiacion").getContext("2d");
   new Chart(ctx, {
     type: "line",
@@ -488,52 +488,52 @@ function generarFichaTecnica() {
   let y = 40; // Initial vertical position
 
   function addDataSection(title, data) {
-      doc.setFontSize(12).setFont(defaultStyle.font, 'normal').text(title, 10, y); // Title is bold
-      y += 6;
+    doc.setFontSize(12).setFont(defaultStyle.font, 'normal').text(title, 10, y); // Title is bold
+    y += 6;
 
-      for (const key in data) {
-          if (typeof data[key] === 'object' && data[key] !== null) {
-              doc.setFontSize(defaultStyle.fontSize).setFont(defaultStyle.font); // Reset to default for nested data
-              doc.text(`${key}:`, 10, y);
-              y += 5;
-              for (let i = 0; i < data[key].length; i++) {
-                  const innerKey = Array.isArray(data[key]) ? i : Object.keys(data[key])[i];
-                  const innerValue = Array.isArray(data[key]) ? data[key][i] : data[key][innerKey];
-                  doc.text(`- ${innerKey}: ${innerValue}`, 15, y);
-                  y += 5;
-              }
-          } else {
-              doc.setFontSize(defaultStyle.fontSize).setFont(defaultStyle.font); // Reset to default before each item
-              doc.text(`${key}: ${data[key]}`, 10, y);
-              y += 5;
-          }
+    for (const key in data) {
+      if (typeof data[key] === 'object' && data[key] !== null) {
+        doc.setFontSize(defaultStyle.fontSize).setFont(defaultStyle.font); // Reset to default for nested data
+        doc.text(`${key}:`, 10, y);
+        y += 5;
+        for (let i = 0; i < data[key].length; i++) {
+          const innerKey = Array.isArray(data[key]) ? i : Object.keys(data[key])[i];
+          const innerValue = Array.isArray(data[key]) ? data[key][i] : data[key][innerKey];
+          doc.text(`- ${innerKey}: ${innerValue}`, 15, y);
+          y += 5;
+        }
+      } else {
+        doc.setFontSize(defaultStyle.fontSize).setFont(defaultStyle.font); // Reset to default before each item
+        doc.text(`${key}: ${data[key]}`, 10, y);
+        y += 5;
       }
-      y += 5; // Add spacing between sections
+    }
+    y += 5; // Add spacing between sections
   }
 
   addDataSection('Detalles del Sistema', {
-      'Irradiación Media Mensual': `${datosInstalacion.irradiacion || "N/D"} kWh/m²/día`,
-      'Inclinación': `30°`,
-      'Azimuth': `180°`,
-      'Número de días de autonomía': `${datosInstalacion.diasAutonomia || "N/D"}`,
-      'Tensión del sistema': `${datosInstalacion.tensionSistema || "N/D"} V`,
-      'Tensión del panel': `${datosInstalacion.tensionPanel || "N/D"} V`,
-      'Corriente máxima del panel': `${datosInstalacion.corrientePanel || "N/D"} A`,
-      'Potencia del panel': `${datosInstalacion.potenciaPanel || "N/D"} W`,
-      'Tensión de las baterías': `${datosInstalacion.tensionBaterias || "N/D"} V`,
-      'Longitud cable Panel-Regulador': `${datosInstalacion.longitudPanelRegulador || "N/D"} m`,
-      'Longitud cable Regulador-Baterías': `${datosInstalacion.longitudReguladorBaterias || "N/D"} m`,
-      'Longitud cable Baterías-Inversor': `${datosInstalacion.longitudBateriasInversor || "N/D"} m`,
-      'Total Cargas en CC': `${datosInstalacion.totalCargasCC || "N/D"} Wh`,
-      'Total Cargas en CA': `${datosInstalacion.totalCargasCA || "N/D"} Wh`,
+    'Irradiación Media Mensual': `${datosInstalacion.irradiacion || "N/D"} kWh/m²/día`,
+    'Inclinación': `30°`,
+    'Azimuth': `180°`,
+    'Número de días de autonomía': `${datosInstalacion.diasAutonomia || "N/D"}`,
+    'Tensión del sistema': `${datosInstalacion.tensionSistema || "N/D"} V`,
+    'Tensión del panel': `${datosInstalacion.tensionPanel || "N/D"} V`,
+    'Corriente máxima del panel': `${datosInstalacion.corrientePanel || "N/D"} A`,
+    'Potencia del panel': `${datosInstalacion.potenciaPanel || "N/D"} W`,
+    'Tensión de las baterías': `${datosInstalacion.tensionBaterias || "N/D"} V`,
+    'Longitud cable Panel-Regulador': `${datosInstalacion.longitudPanelRegulador || "N/D"} m`,
+    'Longitud cable Regulador-Baterías': `${datosInstalacion.longitudReguladorBaterias || "N/D"} m`,
+    'Longitud cable Baterías-Inversor': `${datosInstalacion.longitudBateriasInversor || "N/D"} m`,
+    'Total Cargas en CC': `${datosInstalacion.totalCargasCC || "N/D"} Wh`,
+    'Total Cargas en CA': `${datosInstalacion.totalCargasCA || "N/D"} Wh`,
   });
 
   addDataSection('PANELES', {
-      'Consumo diario (Wh)': resultados.consumoTotal,
-      'Número total de paneles requeridos': resultados.totalPanelesRequeridos,
-      'Paneles en serie': resultados.numPanelesEnSerie,
-      'Paneles en paralelo': resultados.numCadenas,
-      'Corriente total de los paneles': `${resultados.corrienteTotalPaneles} A`,
+    'Consumo diario (Wh)': resultados.consumoTotal,
+    'Número total de paneles requeridos': resultados.totalPanelesRequeridos,
+    'Paneles en serie': resultados.numPanelesEnSerie,
+    'Paneles en paralelo': resultados.numCadenas,
+    'Corriente total de los paneles': `${resultados.corrienteTotalPaneles} A`,
   });
 
   addDataSection('BATERÍAS', {
@@ -560,21 +560,21 @@ function generarFichaTecnica() {
   doc.addPage();
   const canvas = document.getElementById("graficoIrradiacion");
   if (canvas) {
-      const imgData = canvas.toDataURL("image/png");
-      const imgWidth = 180; // Adjust width as needed
-      const imgHeight = canvas.height * imgWidth / canvas.width; // Maintain aspect ratio
-      doc.addImage(imgData, 'PNG', 10, 15, imgWidth, imgHeight);
+    const imgData = canvas.toDataURL("image/png");
+    const imgWidth = 180; // Adjust width as needed
+    const imgHeight = canvas.height * imgWidth / canvas.width; // Maintain aspect ratio
+    doc.addImage(imgData, 'PNG', 10, 15, imgWidth, imgHeight);
   }
 
 
   // ... (Add similar addDataSection calls for BATERÍAS, REGULADOR, INVERSOR, and Irradiación)
-  
-//Irradiación Media Mensual por Mes
-    function agregarFooter() {
-        doc.setFontSize(8); // Smaller font size for the footer
-        doc.setTextColor(defaultStyle.textColor);
-        doc.text("Desarrollado por Miquel Suriñach Mondelo", 10, doc.internal.pageSize.height - 10);
-    }
+
+  //Irradiación Media Mensual por Mes
+  function agregarFooter() {
+    doc.setFontSize(8); // Smaller font size for the footer
+    doc.setTextColor(defaultStyle.textColor);
+    doc.text("Desarrollado por Miquel Suriñach Mondelo", 10, doc.internal.pageSize.height - 10);
+  }
 
   agregarFooter();
   doc.save("FichaTecnica_ElectricTools.pdf");
@@ -583,7 +583,7 @@ function generarFichaTecnica() {
 function abrirModalEmpresa() {
   document.getElementById("modalEmpresa").style.display = "block";
   document.body.style.overflow = "hidden";
-  document.getElementById('nombreVendedor').value = localStorage.getItem('username') || ''; 
+  document.getElementById('nombreVendedor').value = localStorage.getItem('username') || '';
 }
 
 function cerrarModalEmpresa() {
@@ -592,12 +592,12 @@ function cerrarModalEmpresa() {
 }
 
 // Evento para el botón personalizado de subir logo
-document.getElementById("btnSubirLogo").addEventListener("click", function() {
+document.getElementById("btnSubirLogo").addEventListener("click", function () {
   document.getElementById("logoEmpresa").click();
 });
 
 // Evento para el botón de remover logo
-document.getElementById("btnRemoverLogo").addEventListener("click", function() {
+document.getElementById("btnRemoverLogo").addEventListener("click", function () {
   document.getElementById("logoEmpresa").value = "";
   const preview = document.getElementById("logoPreview");
   preview.src = "";
@@ -607,11 +607,11 @@ document.getElementById("btnRemoverLogo").addEventListener("click", function() {
 });
 
 // Mostrar preview del logo cuando se seleccione el archivo
-document.getElementById("logoEmpresa").addEventListener("change", function(event) {
+document.getElementById("logoEmpresa").addEventListener("change", function (event) {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       const preview = document.getElementById("logoPreview");
       preview.src = e.target.result;
       preview.style.display = "inline-block";
@@ -622,14 +622,14 @@ document.getElementById("logoEmpresa").addEventListener("change", function(event
   }
 });
 
-document.getElementById("formModalEmpresa").addEventListener("submit", function(e) {
+document.getElementById("formModalEmpresa").addEventListener("submit", function (e) {
   e.preventDefault();
   const empresa = document.getElementById("nombreEmpresa").value;
   const vendedor = document.getElementById("nombreVendedor").value;
   const cliente = document.getElementById("nombreCliente").value;
   const logoFile = document.getElementById("logoEmpresa").files[0];
   if (logoFile) {
-    obtenerLogoBase64(logoFile, function(logoBase64) {
+    obtenerLogoBase64(logoFile, function (logoBase64) {
       cerrarModalEmpresa();
       generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64);
     });
@@ -641,7 +641,7 @@ document.getElementById("formModalEmpresa").addEventListener("submit", function(
 
 function obtenerLogoBase64(file, callback) {
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     callback(e.target.result);
   };
   reader.readAsDataURL(file);
@@ -654,9 +654,9 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
   const precioRegulador = 200;
   const precioInversor = 300;
   const precioCablePorMetro = 1;
-  
+
   const resultados = calcularSistema();
-  
+
   const precioTotalPaneles = resultados.totalPanelesRequeridos * precioPanel;
   const precioTotalBaterias = resultados.totalBaterias * precioBateria;
   const precioTotalCables = (
@@ -666,26 +666,26 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
   ) * precioCablePorMetro;
   const precioTotalRegulador = precioRegulador;
   const precioTotalInversor = precioInversor;
-  
+
   const subtotal = precioTotalPaneles + precioTotalBaterias + precioTotalCables + precioTotalRegulador + precioTotalInversor;
   const iva = subtotal * 0.21;
   const totalConIVA = subtotal + iva;
-  
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   let y = 10;
-  
+
   function agregarFooter() {
     doc.setFontSize(10);
     doc.text("Desarollado por Miquel Suriñach Mondelo", 10, doc.internal.pageSize.height - 10);
   }
-  
+
   // Encabezado formal tipo factura con recuadro
-  doc.setFillColor(240,240,240);
+  doc.setFillColor(240, 240, 240);
   doc.rect(10, 8, 190, 45, 'F');
   doc.setDrawColor(0);
   doc.rect(10, 8, 190, 45);
-  
+
   doc.setFontSize(16);
   doc.setTextColor(0, 102, 204);
   doc.text("Presupuesto del Sistema Fotovoltaico Autonomo", 12, 20);
@@ -699,7 +699,7 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
   }
   doc.text("Fecha: " + new Date().toLocaleDateString(), 12, 48);
   y = 60;
-  
+
   doc.setDrawColor(0);
   doc.setLineWidth(0.5);
   doc.rect(10, y, 190, 30);
@@ -712,19 +712,19 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
   doc.text(`Corriente: ${resultados.corrienteTotalPaneles} A`, 110, y + 20);
   y += 36;
   agregarFooter();
-  
+
   doc.autoTable({
     startY: y,
     head: [["Componente", "Cantidad", "Precio Unitario (€)", "Total (€)"]],
     body: [
       ["Paneles", resultados.totalPanelesRequeridos, precioPanel.toFixed(2), precioTotalPaneles.toFixed(2)],
       ["Baterías", resultados.totalBaterias, precioBateria.toFixed(2), precioTotalBaterias.toFixed(2)],
-      ["Cables (m)", 
-       (parseFloat(datosInstalacion.longitudPanelRegulador) +
-        parseFloat(datosInstalacion.longitudReguladorBaterias) +
-        parseFloat(datosInstalacion.longitudBateriasInversor)).toFixed(2), 
-       precioCablePorMetro.toFixed(2), 
-       precioTotalCables.toFixed(2)],
+      ["Cables (m)",
+        (parseFloat(datosInstalacion.longitudPanelRegulador) +
+          parseFloat(datosInstalacion.longitudReguladorBaterias) +
+          parseFloat(datosInstalacion.longitudBateriasInversor)).toFixed(2),
+        precioCablePorMetro.toFixed(2),
+        precioTotalCables.toFixed(2)],
       ["Regulador", 1, precioRegulador.toFixed(2), precioTotalRegulador.toFixed(2)],
       ["Inversor", 1, precioInversor.toFixed(2), precioTotalInversor.toFixed(2)]
     ],
@@ -736,9 +736,9 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
       agregarFooter();
     }
   });
-  
+
   y = doc.lastAutoTable.finalY + 4;
-  
+
   doc.autoTable({
     startY: y,
     head: [["Subtotal", "IVA (21%)", "Total con IVA"]],
@@ -751,9 +751,9 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
       agregarFooter();
     }
   });
-  
+
   y = doc.lastAutoTable.finalY + 6;
-  
+
   doc.setFontSize(16);
   doc.text("Gráfico de Irradiación Mensual", 12, y);
   y += 8;
@@ -763,12 +763,12 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
     doc.addImage(imgData, 'PNG', 12, y, 180, 80);
   }
   agregarFooter();
-  
+
   hideSpinner();
   doc.save("Presupuesto_ElectricTools.pdf");
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // ... (Your existing JavaScript code)
 
   const savedUsername = localStorage.getItem('username');
@@ -780,43 +780,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   function showLoginModal() {
-      modalBackdrop.style.display = "block";
-      loginModal.style.display = "block";
+    modalBackdrop.style.display = "block";
+    loginModal.style.display = "block";
   }
 
 
   function showWelcomeMessage(username) {
-      usernameDisplay.textContent = "¡Hola, " + username + "!"; // Display after welcome screen
+    usernameDisplay.textContent = "¡Hola, " + username + "!"; // Display after welcome screen
   }
 
 
   function saveUsername() {
-      const username = usernameInput.value.trim();
-      if (username) {
-          localStorage.setItem('username', username);
-          loginModal.style.display = "none";
-          modalBackdrop.style.display = "none";
-          showWelcomeMessage(username);
-      } else {
-          alert("Por favor, introduce tu nombre.")
-      }
+    const username = usernameInput.value.trim();
+    if (username) {
+      localStorage.setItem('username', username);
+      loginModal.style.display = "none";
+      modalBackdrop.style.display = "none";
+      showWelcomeMessage(username);
+    } else {
+      alert("Por favor, introduce tu nombre.")
+    }
   }
 
 
   if (savedUsername) {
-      showWelcomeMessage(savedUsername);
+    showWelcomeMessage(savedUsername);
   } else {
-      showLoginModal();
+    showLoginModal();
   }
 
   // Event listeners
   document.querySelector('#loginModal button').addEventListener('click', saveUsername);
-  clickableTitle.addEventListener('click', function() {
-      window.location.href = '../index.html'; // Updated path
+  clickableTitle.addEventListener('click', function () {
+    window.location.href = '../index.html'; // Updated path
   });
-  
-	usernameDisplay.addEventListener('click', function() {
-		window.location.href = '../settings.html'; // Open settings.html
-	});
+
+  usernameDisplay.addEventListener('click', function () {
+    window.location.href = '../settings.html'; // Open settings.html
+  });
 });
 
