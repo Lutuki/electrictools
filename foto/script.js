@@ -368,67 +368,104 @@ function calcularSistema() {
 function mostrarReporte() {
   const resultados = calcularSistema(datosInstalacion);
   let reporteHTML = `
-    <p><strong>Irradiación Media Mensual:</strong> ${datosInstalacion.irradiacion || "N/D"} kWh/m²/día</p>
-    <p><strong>Detalles del Sistema:</strong></p>
-    <ul>
-      <li>Inclinación: 30°</li>
-      <li>Azimuth: 180°</li>
-      <li>Número de días de autonomía: ${datosInstalacion.diasAutonomia || "N/D"}</li>
-      <li>Tensión del sistema: ${datosInstalacion.tensionSistema || "N/D"} V</li>
-      <li>Tensión del panel: ${datosInstalacion.tensionPanel || "N/D"} V</li>
-      <li>Corriente máxima del panel: ${datosInstalacion.corrientePanel || "N/D"} A</li>
-      <li>Potencia del panel: ${datosInstalacion.potenciaPanel || "N/D"} W</li>
-      <li>Tensión de las baterías: ${datosInstalacion.tensionBaterias || "N/D"} V</li>
-      <li>Longitud cable Panel-Regulador: ${datosInstalacion.longitudPanelRegulador || "N/D"} m</li>
-      <li>Longitud cable Regulador-Baterías: ${datosInstalacion.longitudReguladorBaterias || "N/D"} m</li>
-      <li>Longitud cable Baterías-Inversor: ${datosInstalacion.longitudBateriasInversor || "N/D"} m</li>
-      <li>Total Cargas en CC: ${datosInstalacion.totalCargasCC || "N/D"} Wh</li>
-      <li>Total Cargas en CA: ${datosInstalacion.totalCargasCA || "N/D"} Wh</li>
-    </ul>
-    <p><strong>PANELES:</strong></p>
-    <ul>
-      <li>Consumo diario: ${resultados.consumoTotal} Wh</li>
-      <li>Paneles en serie: ${resultados.numPanelesEnSerie}</li>
-      <li>Paneles en paralelo: ${resultados.numCadenas}</li>
-      <li>Total de paneles: ${resultados.totalPanelesRequeridos}</li>
-      <li>Corriente total de los paneles: ${resultados.corrienteTotalPaneles} A</li>
-    </ul>
+    <style>
+      .report-container { font-family: 'Montserrat', sans-serif; }
+      .report-header-box { background: #eef5fb; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #333; border: 1px solid #bce0fd; }
+      .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 20px; }
+      .report-card { background: #fff; border: 1px solid #e0e0e0; border-top: 4px solid #0066cc; border-radius: 8px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+      .report-card h4 { margin-top: 0; color: #0066cc; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; margin-bottom: 12px; font-size: 1.1em; display:flex; align-items:center; gap: 8px; }
+      .report-card h4 i { color: #0066cc; }
+      .report-card ul { list-style-type: none; padding: 0; margin: 0; }
+      .report-card li { padding: 6px 0; font-size: 0.95em; color: #444; border-bottom: 1px dashed #f0f0f0; }
+      .report-card li:last-child { border-bottom: none; }
+      .report-card li strong { color: #222; font-weight: 600; }
+    </style>
     
-    <p><strong>BATERÍAS:</strong></p>
-    <ul>
-      <li>Capacidad necesaria del banco: ${resultados.capacidadNecesariaAh} Ah</li>
-      <li>Baterías en serie: ${resultados.bateriasEnSerie}</li>
-      <li>Baterías en paralelo: ${resultados.numCadenasBaterias}</li>
-      <li>Total de baterías: ${resultados.totalBaterias}</li>
-      <li>Capacidad mínima requerida de cada batería: ${resultados.capacidadMinimaPorBateria} Ah</li>
-    </ul>
-    
-    <p><strong>REGULADOR:</strong></p>
-    <ul>
-      <li>Tensión: ${resultados.voltajeRegulador} V</li>
-      <li>Corriente mínima soportada: ${resultados.corrienteTotalPaneles} A</li>
-    </ul>
-    
-    <p><strong>INVERSOR:</strong></p>
-    <ul>
-      <li>Potencia mínima: ${resultados.potenciaInversor} VA</li>
-      <li>Tensión CC de entrada: ${datosInstalacion.tensionSistema || "N/D"} V</li>
-      <li>Tensión CA de salida: ${resultados.voltajeCAInversor} V</li>
-      <li>Corriente de entrada: ${resultados.corrienteEntradaInversor} A</li>
-      <li>Corriente de salida: ${resultados.corrienteSalidaInversor} A</li>
-    </ul>
-    
-    <p><strong>Irradiación Media Mensual por Mes:</strong></p>
-    <ul>`;
+    <div class="report-container">
+      <div class="report-header-box">
+        <p style="margin:0 0 8px 0;"><strong><i class="fas fa-sun" style="color:#FFA500;"></i> Irradiación Media Mensual:</strong> <span style="color:#0066cc; font-weight:bold; font-size:1.1em;">${datosInstalacion.irradiacion || "N/D"}</span> kWh/m²/día</p>
+        <p style="margin:0;"><strong><i class="fas fa-calendar-check" style="color:#0066cc;"></i> Número de días de autonomía:</strong> <span style="font-weight:bold;">${datosInstalacion.diasAutonomia || "N/D"}</span></p>
+      </div>
+
+      <div class="report-grid">
+        <div class="report-card">
+          <h4><i class="fas fa-list-alt"></i> Detalles del Sistema</h4>
+          <ul>
+            <li><strong>Inclinación:</strong> 30°</li>
+            <li><strong>Azimuth:</strong> 180°</li>
+            <li><strong>Tensión del sistema:</strong> ${datosInstalacion.tensionSistema || "N/D"} V</li>
+            <li><strong>Tensión de las baterías:</strong> ${datosInstalacion.tensionBaterias || "N/D"} V</li>
+            <li><strong>Tensión del panel:</strong> ${datosInstalacion.tensionPanel || "N/D"} V</li>
+            <li><strong>Corriente máxima del panel:</strong> ${datosInstalacion.corrientePanel || "N/D"} A</li>
+            <li><strong>Potencia del panel:</strong> ${datosInstalacion.potenciaPanel || "N/D"} W</li>
+          </ul>
+        </div>
+        
+        <div class="report-card">
+          <h4><i class="fas fa-network-wired"></i> Cableado & Cargas</h4>
+          <ul>
+            <li><strong>Cable Panel-Regulador:</strong> ${datosInstalacion.longitudPanelRegulador || "N/D"} m</li>
+            <li><strong>Cable Regulador-Baterías:</strong> ${datosInstalacion.longitudReguladorBaterias || "N/D"} m</li>
+            <li><strong>Cable Baterías-Inversor:</strong> ${datosInstalacion.longitudBateriasInversor || "N/D"} m</li>
+            <li><strong>Total Cargas en CC:</strong> ${datosInstalacion.totalCargasCC || "0"} Wh</li>
+            <li><strong>Total Cargas en CA:</strong> ${datosInstalacion.totalCargasCA || "0"} Wh</li>
+          </ul>
+        </div>
+
+        <div class="report-card">
+          <h4><i class="fas fa-solar-panel"></i> PANELES</h4>
+          <ul>
+            <li><strong>Consumo diario:</strong> ${resultados.consumoTotal} Wh</li>
+            <li><strong>Paneles en serie:</strong> ${resultados.numPanelesEnSerie}</li>
+            <li><strong>Paneles en paralelo:</strong> ${resultados.numCadenas}</li>
+            <li><strong>Total de paneles:</strong> ${resultados.totalPanelesRequeridos}</li>
+            <li><strong>Corriente total paneles:</strong> ${resultados.corrienteTotalPaneles} A</li>
+          </ul>
+        </div>
+        
+        <div class="report-card">
+          <h4><i class="fas fa-car-battery"></i> BATERÍAS</h4>
+          <ul>
+            <li><strong>Capacidad nec. banco:</strong> ${resultados.capacidadNecesariaAh} Ah</li>
+            <li><strong>Baterías en serie:</strong> ${resultados.bateriasEnSerie}</li>
+            <li><strong>Baterías en paralelo:</strong> ${resultados.numCadenasBaterias}</li>
+            <li><strong>Total de baterías:</strong> ${resultados.totalBaterias}</li>
+            <li><strong>Capacidad mín. por batería:</strong> ${resultados.capacidadMinimaPorBateria} Ah</li>
+          </ul>
+        </div>
+        
+        <div class="report-card">
+          <h4><i class="fas fa-microchip"></i> REGULADOR</h4>
+          <ul>
+            <li><strong>Tensión:</strong> ${resultados.voltajeRegulador} V</li>
+            <li><strong>Corriente mín. soportada:</strong> ${resultados.corrienteTotalPaneles} A</li>
+          </ul>
+        </div>
+        
+        <div class="report-card">
+          <h4><i class="fas fa-plug"></i> INVERSOR</h4>
+          <ul>
+            <li><strong>Potencia mínima:</strong> ${resultados.potenciaInversor} VA</li>
+            <li><strong>Tensión CC (entrada):</strong> ${datosInstalacion.tensionSistema || "N/D"} V</li>
+            <li><strong>Tensión CA (salida):</strong> ${resultados.voltajeCAInversor} V</li>
+            <li><strong>Corriente de entrada:</strong> ${resultados.corrienteEntradaInversor} A</li>
+            <li><strong>Corriente de salida:</strong> ${resultados.corrienteSalidaInversor} A</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="report-card" style="margin-bottom: 20px;">
+        <h4><i class="fas fa-calendar-alt"></i> Irradiación Media Mensual por Mes</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">`;
   const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
   if (datosInstalacion.irradiacionMensual && datosInstalacion.irradiacionMensual.length === 12) {
     datosInstalacion.irradiacionMensual.forEach((valor, idx) => {
-      reporteHTML += `<li>${meses[idx]}: ${valor} kWh/m²/día</li>`;
+      reporteHTML += `<div style="text-align:center; padding: 10px; background:#f0f5fa; border-radius:6px; font-size:0.9em; box-shadow:inset 0 1px 3px rgba(0,0,0,0.05);"><strong>${meses[idx]}</strong><br><span style="color:#0066cc;font-weight:bold;">${valor}</span><br><span style="font-size:0.8em;color:#666;">kWh/m²</span></div>`;
     });
   } else {
-    reporteHTML += `<li>Datos de irradiación no disponibles.</li>`;
+    reporteHTML += `<p style="padding: 10px; width: 100%;">Datos de irradiación no disponibles.</p>`;
   }
-  reporteHTML += `</ul>`;
+  reporteHTML += `</div></div></div>`;
 
   document.getElementById("section3").innerHTML = ` 
     <h3>Reporte del Sistema Fotovoltaico</h3>
@@ -476,39 +513,59 @@ function generarFichaTecnica() {
   doc.setFont(defaultStyle.font);
   doc.setFontSize(defaultStyle.fontSize);
 
-  // Title and User
-  doc.setFontSize(titleStyle.fontSize);
-  doc.setTextColor(titleStyle.textColor);
-  doc.text('Ficha Técnica', 10, 20);
+  // Title and User Box
+  doc.setFillColor(245, 248, 253);
+  doc.setDrawColor(0, 102, 204);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(10, 10, 190, 22, 3, 3, 'FD');
 
-  doc.setFontSize(defaultStyle.fontSize);
-  doc.setTextColor(defaultStyle.textColor);
-  doc.text(`Vendedor: ${username} - Fecha: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 10, 30);
+  doc.setFontSize(20);
+  doc.setFont(defaultStyle.font, 'bold');
+  doc.setTextColor(0, 102, 204);
+  doc.text('Ficha Técnica del Sistema', 15, 20);
+
+  doc.setFontSize(10);
+  doc.setFont(defaultStyle.font, 'normal');
+  doc.setTextColor(80, 80, 80);
+  doc.text(`Generado por: ${username}  |  Fecha: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 15, 27);
 
   let y = 40; // Initial vertical position
 
   function addDataSection(title, data) {
-    doc.setFontSize(12).setFont(defaultStyle.font, 'normal').text(title, 10, y); // Title is bold
-    y += 6;
-
-    for (const key in data) {
-      if (typeof data[key] === 'object' && data[key] !== null) {
-        doc.setFontSize(defaultStyle.fontSize).setFont(defaultStyle.font); // Reset to default for nested data
-        doc.text(`${key}:`, 10, y);
-        y += 5;
-        for (let i = 0; i < data[key].length; i++) {
-          const innerKey = Array.isArray(data[key]) ? i : Object.keys(data[key])[i];
-          const innerValue = Array.isArray(data[key]) ? data[key][i] : data[key][innerKey];
-          doc.text(`- ${innerKey}: ${innerValue}`, 15, y);
-          y += 5;
-        }
-      } else {
-        doc.setFontSize(defaultStyle.fontSize).setFont(defaultStyle.font); // Reset to default before each item
-        doc.text(`${key}: ${data[key]}`, 10, y);
-        y += 5;
-      }
+    if (y > 250) {
+      doc.addPage();
+      y = 20;
     }
-    y += 5; // Add spacing between sections
+    doc.setFontSize(12);
+    doc.setTextColor(255, 255, 255);
+    doc.setFillColor(0, 102, 204);
+
+    // Draw top rounded, bottom square
+    doc.roundedRect(10, y, 190, 8, 2, 2, 'F'); // Ruedas completas (las de abajo se tapan)
+    doc.rect(10, y + 4, 190, 4, 'F');         // Tapa las ruedas inferiores con rectángulo
+
+    doc.setFont(defaultStyle.font, 'bold');
+    doc.text(title, 14, y + 6);
+    y += 8;
+
+    const body = [];
+    for (const key in data) {
+      body.push([key, data[key]]);
+    }
+
+    doc.autoTable({
+      startY: y,
+      body: body,
+      theme: 'grid',
+      styles: { fontSize: 10, cellPadding: 3, textColor: [50, 50, 50] },
+      columnStyles: {
+        0: { fontStyle: 'bold', cellWidth: 90, fillColor: [248, 250, 252] },
+        1: { cellWidth: 100 }
+      },
+      margin: { left: 10, right: 10 }
+    });
+
+    y = doc.lastAutoTable.finalY + 8;
   }
 
   addDataSection('Detalles del Sistema', {
@@ -558,25 +615,32 @@ function generarFichaTecnica() {
   });
 
   doc.addPage();
+  doc.setFontSize(14);
+  doc.setTextColor(255, 255, 255);
+  doc.setFillColor(0, 102, 204);
+  doc.roundedRect(10, 10, 190, 10, 2, 2, 'F');
+  doc.setFont(defaultStyle.font, 'bold');
+  doc.text("Gráfico de Irradiación Mensual", 14, 17);
+
   const canvas = document.getElementById("graficoIrradiacion");
   if (canvas) {
     const imgData = canvas.toDataURL("image/png");
     const imgWidth = 180; // Adjust width as needed
     const imgHeight = canvas.height * imgWidth / canvas.width; // Maintain aspect ratio
-    doc.addImage(imgData, 'PNG', 10, 15, imgWidth, imgHeight);
+    doc.addImage(imgData, 'PNG', 15, 25, imgWidth, imgHeight);
   }
 
 
   // ... (Add similar addDataSection calls for BATERÍAS, REGULADOR, INVERSOR, and Irradiación)
 
-  //Irradiación Media Mensual por Mes
-  function agregarFooter() {
-    doc.setFontSize(8); // Smaller font size for the footer
-    doc.setTextColor(defaultStyle.textColor);
+  function drawFooter(data) {
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
     doc.text("Desarrollado por Miquel Suriñach Mondelo", 10, doc.internal.pageSize.height - 10);
   }
 
-  agregarFooter();
+  // Add footer to first page (page 1 is created by default)
+  drawFooter();
   doc.save("FichaTecnica_ElectricTools.pdf");
 }
 
@@ -675,43 +739,85 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
   const doc = new jsPDF();
   let y = 10;
 
-  function agregarFooter() {
+  function drawFooter(data) {
     doc.setFontSize(10);
-    doc.text("Desarollado por Miquel Suriñach Mondelo", 10, doc.internal.pageSize.height - 10);
+    doc.setTextColor(150, 150, 150);
+    doc.text("Desarrollado por Miquel Suriñach Mondelo", 10, doc.internal.pageSize.height - 10);
   }
 
   // Encabezado formal tipo factura con recuadro
-  doc.setFillColor(240, 240, 240);
-  doc.rect(10, 8, 190, 45, 'F');
-  doc.setDrawColor(0);
-  doc.rect(10, 8, 190, 45);
+  doc.setFillColor(245, 248, 253);
+  doc.setDrawColor(0, 102, 204);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(10, 8, 190, 45, 3, 3, 'FD');
 
-  doc.setFontSize(16);
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
   doc.setTextColor(0, 102, 204);
-  doc.text("Presupuesto del Sistema Fotovoltaico Autonomo", 12, 20);
-  doc.setFontSize(12);
-  doc.setTextColor(0, 0, 0);
-  doc.text(`Empresa: ${empresa}`, 12, 28);
-  doc.text(`Vendedor: ${vendedor}`, 12, 34);
-  doc.text(`Cliente: ${cliente}`, 12, 40);
+  doc.text("Presupuesto Sistema Fotovoltaico Autónomo", 15, 20);
+
+  doc.setFontSize(11);
+  doc.setTextColor(60, 60, 60);
+  doc.setFont("helvetica", "bold");
+  doc.text("Empresa: ", 15, 30); doc.setFont("helvetica", "normal"); doc.text(`${empresa}`, 35, 30);
+  doc.setFont("helvetica", "bold");
+  doc.text("Vendedor: ", 15, 36); doc.setFont("helvetica", "normal"); doc.text(`${vendedor}`, 37, 36);
+  doc.setFont("helvetica", "bold");
+  doc.text("Cliente: ", 15, 42); doc.setFont("helvetica", "normal"); doc.text(`${cliente}`, 32, 42);
+  doc.setFont("helvetica", "bold");
+  doc.text("Fecha: ", 15, 48); doc.setFont("helvetica", "normal"); doc.text(`${new Date().toLocaleDateString()}`, 30, 48);
+
   if (logoBase64) {
-    doc.addImage(logoBase64, 'PNG', 150, 12, 40, 35);
+    const imgProps = doc.getImageProperties(logoBase64);
+    const maxWidth = 35;
+    const maxHeight = 35;
+    let imgWidth = imgProps.width;
+    let imgHeight = imgProps.height;
+
+    // Scale image proportionally
+    const ratio = Math.min(maxWidth / imgWidth, maxHeight / imgHeight);
+    imgWidth = imgWidth * ratio;
+    imgHeight = imgHeight * ratio;
+
+    // Align it to the right (x=195 minus width) and center it vertically in the box
+    const xOffset = 195 - imgWidth;
+    const yOffset = 10 + (41 - imgHeight) / 2;
+
+    doc.addImage(logoBase64, 'PNG', xOffset, yOffset, imgWidth, imgHeight);
   }
-  doc.text("Fecha: " + new Date().toLocaleDateString(), 12, 48);
+
   y = 60;
 
-  doc.setDrawColor(0);
-  doc.setLineWidth(0.5);
-  doc.rect(10, y, 190, 30);
+  // Box for "Resumen del Sistema"
+  doc.setFillColor(0, 102, 204);
+  // Top rounded, bottom square
+  doc.roundedRect(10, y, 190, 8, 2, 2, 'F');
+  // Bleed bottom slightly to overlap with the grey border
+  doc.rect(10, y + 4, 190, 4.5, 'F');
+
   doc.setFontSize(12);
-  doc.text("Resumen del Sistema:", 12, y + 8);
-  doc.setFontSize(11);
-  doc.text(`Consumo diario: ${resultados.consumoTotal} Wh`, 12, y + 14);
-  doc.text(`Paneles: ${resultados.totalPanelesRequeridos}`, 12, y + 20);
-  doc.text(`Baterías: ${resultados.totalBaterias}`, 110, y + 14);
-  doc.text(`Corriente: ${resultados.corrienteTotalPaneles} A`, 110, y + 20);
-  y += 36;
-  agregarFooter();
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(255, 255, 255);
+  doc.text("Resumen del Sistema", 15, y + 6);
+  y += 8;
+
+  doc.setFillColor(250, 250, 250);
+  doc.setDrawColor(200, 200, 200);
+  doc.setLineWidth(0.1);
+  doc.rect(10, y, 190, 20, 'FD');
+  doc.setFontSize(10);
+  doc.setTextColor(50, 50, 50);
+  doc.setFont("helvetica", "bold"); doc.text("Consumo diario:", 15, y + 8); doc.setFont("helvetica", "normal"); doc.text(`${resultados.consumoTotal} Wh`, 50, y + 8);
+  doc.setFont("helvetica", "bold"); doc.text("Total Paneles:", 15, y + 14); doc.setFont("helvetica", "normal"); doc.text(`${resultados.totalPanelesRequeridos}`, 50, y + 14);
+  doc.setFont("helvetica", "bold"); doc.text("Total Baterías:", 105, y + 8); doc.setFont("helvetica", "normal"); doc.text(`${resultados.totalBaterias}`, 145, y + 8);
+  doc.setFont("helvetica", "bold"); doc.text("Corriente en paneles:", 105, y + 14); doc.setFont("helvetica", "normal"); doc.text(`${resultados.corrienteTotalPaneles} A`, 145, y + 14);
+  y += 26;
+
+  // Background behind headers with rounded top corners (and square bottom)
+  doc.setFillColor(0, 102, 204);
+  // Give the background a slightly larger height (e.g. 11 instead of 10) to bleed under the table body avoiding white gaps
+  doc.roundedRect(10, y, 190, 11, 2, 2, 'F');
+  doc.rect(10, y + 5, 190, 6, 'F');
 
   doc.autoTable({
     startY: y,
@@ -728,41 +834,59 @@ function generarPresupuestoConDatos(empresa, vendedor, cliente, logoBase64) {
       ["Regulador", 1, precioRegulador.toFixed(2), precioTotalRegulador.toFixed(2)],
       ["Inversor", 1, precioInversor.toFixed(2), precioTotalInversor.toFixed(2)]
     ],
-    theme: 'grid',
-    styles: { fontSize: 10 },
-    headStyles: { fillColor: [0, 102, 204] },
-    margin: { top: y, left: 10, right: 10 },
-    didDrawPage: function (data) {
-      agregarFooter();
-    }
+    theme: 'plain', // Use plain to not overlap background we just drew
+    styles: { fontSize: 10, cellPadding: 3, textColor: [50, 50, 50] },
+    headStyles: { fillColor: false, textColor: 255 }, // Make header background transparent
+    bodyStyles: { lineColor: [220, 220, 220], lineWidth: 0.1 },
+    alternateRowStyles: { fillColor: [250, 252, 255] },
+    margin: { top: 20, left: 10, right: 10 },
+    didDrawPage: drawFooter
   });
 
   y = doc.lastAutoTable.finalY + 4;
+
+  // Background behind Subtotal headers with rounded top corners (and square bottom)
+  doc.setFillColor(0, 102, 204);
+  doc.roundedRect(10, y, 190, 11, 2, 2, 'F');
+  doc.rect(10, y + 5, 190, 6, 'F');
 
   doc.autoTable({
     startY: y,
     head: [["Subtotal", "IVA (21%)", "Total con IVA"]],
     body: [[`€ ${subtotal.toFixed(2)}`, `€ ${iva.toFixed(2)}`, `€ ${totalConIVA.toFixed(2)}`]],
-    theme: 'grid',
-    styles: { fontSize: 12, halign: 'center' },
-    headStyles: { fillColor: [0, 102, 204] },
-    margin: { left: 10, right: 10 },
-    didDrawPage: function (data) {
-      agregarFooter();
-    }
+    theme: 'plain',
+    styles: { fontSize: 12, halign: 'center', cellPadding: 3, textColor: [50, 50, 50] },
+    headStyles: { fillColor: false, textColor: 255 },
+    bodyStyles: { lineColor: [220, 220, 220], lineWidth: 0.1 },
+    margin: { top: 20, left: 10, right: 10 },
+    didDrawPage: drawFooter
   });
 
   y = doc.lastAutoTable.finalY + 6;
 
-  doc.setFontSize(16);
-  doc.text("Gráfico de Irradiación Mensual", 12, y);
-  y += 8;
+  if (y > 200) {
+    doc.addPage();
+    y = 20;
+  }
+  doc.setFillColor(0, 102, 204);
+  // Top rounded, bottom square
+  doc.roundedRect(10, y, 190, 10, 2, 2, 'F');
+  // Bleed bottom edge
+  doc.rect(10, y + 5, 190, 5.5, 'F');
+
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(255, 255, 255);
+  doc.text("Gráfico de Irradiación Mensual", 15, y + 7);
+  y += 10;
+
   const canvas = document.getElementById("graficoIrradiacion");
   if (canvas) {
     const imgData = canvas.toDataURL("image/png");
-    doc.addImage(imgData, 'PNG', 12, y, 180, 80);
+    doc.setDrawColor(200, 200, 200);
+    doc.rect(10, y, 190, 84, 'D'); // Draw border exactly where the blue header ends
+    doc.addImage(imgData, 'PNG', 15, y + 2, 180, 80);
   }
-  agregarFooter();
 
   hideSpinner();
   doc.save("Presupuesto_ElectricTools.pdf");

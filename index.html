@@ -49,6 +49,17 @@
         Desarrollado por Miquel Suriñach Mondelo
     </footer>
 
+    <!-- Toast Notification -->
+    <div id="updateToast" class="toast">
+        <div class="toast-content">
+            <span class="toast-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="toast-message">Hay una nueva actualización instalada.</span>
+            <button class="toast-btn" onclick="location.href='changelog.html#v1.0.3'">Ver cambios</button>
+            <span class="toast-close" title="No mostrar más esta notificación" onclick="closeToast()"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="toast-progress"></div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // All code that interacts with the DOM goes INSIDE this listener
@@ -112,6 +123,28 @@
             usernameDisplay.addEventListener('click', function() {
                 window.location.href = 'settings.html'; // Open settings.html
             });
+
+            // Update Toast Logic
+            const toast = document.getElementById('updateToast');
+            const toastKey = 'update_notified_v1.0.3';
+            let toastTimeout;
+
+            if (!localStorage.getItem(toastKey)) {
+                // Show toast after a slight delay
+                setTimeout(() => {
+                    toast.classList.add('show');
+                    // Hide after 30 seconds
+                    toastTimeout = setTimeout(() => {
+                        window.closeToast();
+                    }, 30000);
+                }, 1000);
+            }
+
+            window.closeToast = function() {
+                toast.classList.remove('show');
+                localStorage.setItem(toastKey, 'true');
+                if (toastTimeout) clearTimeout(toastTimeout);
+            };
         });
     </script>        
 </body>
