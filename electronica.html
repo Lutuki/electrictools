@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Electric Tools - Electrónica</title>
-  <link rel="icon" href="https://raw.githubusercontent.com/ugf1blyfv1/ugf1blyfv1/refs/heads/main/favicon.png" type="image/x-icon">
-  <link rel="stylesheet" href="main_styles.css">  <!-- Make sure this links to your CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Electric Tools - Electrónica</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ugf1blyfv1/ugf1blyfv1/refs/heads/main/favicon.png"
+        type="image/x-icon">
+    <link rel="stylesheet" href="main_styles.css"> <!-- Make sure this links to your CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body class="main-page">
 
     <div id="modalBackdrop" class="modal-backdrop"></div>
@@ -28,84 +32,92 @@
     </div>
 
     <header class="top-bar">
-        <div class="left"><a href="index.html"><i class="fas fa-arrow-left"></i> Volver</a></div>  </div> <div class="center"><span id="clickableTitle">Electric Tools</span></div>
+        <div class="left"><a href="index.html"><i class="fas fa-arrow-left"></i> Volver</a></div>
+        </div>
+        <div class="center"><span id="clickableTitle">Electric Tools</span></div>
         <div class="right"><span class="username"></span></div>
     </header>
 
     <main class="content">
         <h2 id="appsTitle"></h2>
-        <div class="clickable-box" onclick="location.href='electronica/circuitos.html'">  <!-- Link to autonom_sistem.html -->
-            <i class="fas fa-microchip box-icon"></i>  <!-- You can change the icon if you prefer -->
-            Simulador Circuitos  <!-- Updated Text -->
+        <div class="clickable-box" onclick="location.href='electronica/circuitos.html'">
+            <!-- Link to autonom_sistem.html -->
+            <i class="fas fa-microchip box-icon"></i> <!-- You can change the icon if you prefer -->
+            Simulador Circuitos <!-- Updated Text -->
         </div>
-        
-        </main>
+        <div class="clickable-box"
+            onclick="location.href='https://lutuki.github.io/electrictools/electronica/GRUMB-ELECTRONIC-10-02-2026.zip'">
+            <i class="fas fa-download box-icon"></i>
+            GRUMB
+        </div>
+
+    </main>
 
     <footer class="fixed-footer">
         Desarrollado por Miquel Suriñach Mondelo
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const usernameInput = document.getElementById('username');
-        const loginModal = document.getElementById('loginModal');
-        const modalBackdrop = document.getElementById('modalBackdrop');
-        const welcomeScreen = document.getElementById('welcomeScreen');
-        const welcomeTitle = document.getElementById('welcomeTitle');
-        const usernameDisplay = document.querySelector('.username');
-        const clickableTitle = document.getElementById('clickableTitle');
+        document.addEventListener('DOMContentLoaded', function () {
+            const usernameInput = document.getElementById('username');
+            const loginModal = document.getElementById('loginModal');
+            const modalBackdrop = document.getElementById('modalBackdrop');
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const welcomeTitle = document.getElementById('welcomeTitle');
+            const usernameDisplay = document.querySelector('.username');
+            const clickableTitle = document.getElementById('clickableTitle');
 
-        const savedUsername = localStorage.getItem('username');
+            const savedUsername = localStorage.getItem('username');
 
-        function showLoginModal() {
-            modalBackdrop.style.display = "block";
-            loginModal.style.display = "block";
-        }
-
-      clickableTitle.addEventListener('click', function() {
-        window.location.href = 'index.html';  // Navigate one directory up
-      });
-
-        if (savedUsername) {
-            showWelcomeMessage(savedUsername);
-        } else {
-            showLoginModal();
-        }
-
-        function showWelcomeMessage(username) {
-            usernameDisplay.textContent = "¡Hola, " + username + "!"; // Moved to display after welcome message
-        }
-
-        function saveUsername() {
-            const username = usernameInput.value.trim();
-            if (username) {
-                localStorage.setItem('username', username);
-                loginModal.style.display = "none";
-                modalBackdrop.style.display = "none";
-                showWelcomeMessage(username);
-            } else {
-                alert("Por favor, introduce tu nombre.")
+            function showLoginModal() {
+                modalBackdrop.style.display = "block";
+                loginModal.style.display = "block";
             }
-        }
 
-        if (savedUsername) {
-            showWelcomeMessage(savedUsername);
-        } else {
-            showLoginModal();
-        }
+            clickableTitle.addEventListener('click', function () {
+                window.location.href = 'index.html';  // Navigate one directory up
+            });
+
+            if (savedUsername) {
+                showWelcomeMessage(savedUsername);
+            } else {
+                showLoginModal();
+            }
+
+            function showWelcomeMessage(username) {
+                usernameDisplay.textContent = "¡Hola, " + username + "!"; // Moved to display after welcome message
+            }
+
+            function saveUsername() {
+                const username = usernameInput.value.trim();
+                if (username) {
+                    localStorage.setItem('username', username);
+                    loginModal.style.display = "none";
+                    modalBackdrop.style.display = "none";
+                    showWelcomeMessage(username);
+                } else {
+                    alert("Por favor, introduce tu nombre.")
+                }
+            }
+
+            if (savedUsername) {
+                showWelcomeMessage(savedUsername);
+            } else {
+                showLoginModal();
+            }
 
 
-        document.querySelector('#loginModal button').addEventListener('click', saveUsername);
+            document.querySelector('#loginModal button').addEventListener('click', saveUsername);
 
-        clickableTitle.addEventListener('click', function() {
-            window.location.href = 'index.html';
+            clickableTitle.addEventListener('click', function () {
+                window.location.href = 'index.html';
+            });
+
+            usernameDisplay.addEventListener('click', function () {
+                window.location.href = 'settings.html'; // Open settings.html
+            });
         });
-		
-		usernameDisplay.addEventListener('click', function() {
-		window.location.href = 'settings.html'; // Open settings.html
-		});
-    });
     </script>
 </body>
-</html>
 
+</html>
